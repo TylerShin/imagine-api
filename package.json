@@ -22,9 +22,11 @@
   "homepage": "https://github.com/TylorShin/imagine-api#readme",
   "devDependencies": {
     "@types/node": "^7.0.5",
+    "@types/uuid": "^2.0.29",
     "typescript": "^2.2.1"
   },
   "dependencies": {
-    "dynamoose": "^0.7.0"
+    "dynamoose": "^0.7.0",
+    "uuid": "^3.0.1"
   }
 }
