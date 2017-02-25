@@ -1,0 +1,19 @@
+{
+  "name": "imagine-api",
+  "version": "1.0.0",
+  "description": "Imagine serverless API service",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TylorShin/imagine-api.git"
+  },
+  "author": "Tylor Shin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TylorShin/imagine-api/issues"
+  },
+  "homepage": "https://github.com/TylorShin/imagine-api#readme"
+}
