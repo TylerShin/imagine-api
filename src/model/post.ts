@@ -1,16 +1,18 @@
 import * as dynamoose from 'dynamoose';
+import { SERVICE_NAME, POST_TABLE } from '../constants';
+
 const Schema = dynamoose.Schema;
 
 export const postSchema = new Schema({
-  id: {
+  postId: {
     type: String,
-    validate: function(value: number) { return value > 0; },
+    validate: function(value: string) { return value.length > 0; },
     hashKey: true,
     required: true,
   },
   content: {
     type: String,
-    validate: function(value: number) { return value < 10; },
+    validate: function(value: string) { return value.length < 10; },
   },
   resources: {
     type: [String],
@@ -21,6 +23,6 @@ export const postSchema = new Schema({
   timestamps: true
 });
 
-const Post = dynamoose.model('posts', postSchema);
+const Post = dynamoose.model(`${SERVICE_NAME}-${POST_TABLE}`, postSchema);
 
 export default Post;

@@ -6,7 +6,7 @@ import Post from "../../model/post";
 export default async function handler(event: LambdaProxy.Event): Promise<LambdaProxy.Response> {
   try {
     const newPost = new Post({
-      id: uuid.v1(),
+      postId: uuid.v1(),
       content: "less 10",
       resources: ["https://images.vingle.net/upload/t_ca_xl/wanhqbpjpgrwevqx9fn2.jpg"],
     });
