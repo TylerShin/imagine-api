@@ -6,6 +6,7 @@ import errorMaker from "../../helper/errorMaker";
 interface IWritePostHTTPBody {
   content: string;
   resources: [string];
+  userId: string;
 }
 
 export default async function handler(event: LambdaProxy.Event): Promise<LambdaProxy.Response> {
@@ -26,6 +27,7 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
   try {
     const newPost = new Post({
       postId: uuid.v1(),
+      userId: httpBody.userId,
       content: httpBody.content || "",
       resources: httpBody.resources,
     });

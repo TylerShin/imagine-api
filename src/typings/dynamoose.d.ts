@@ -46,7 +46,7 @@ declare module "dynamoose" {
       rangeKey: string;
       project: boolean;
       throughput: number;
-    }
+    } | boolean;
     default?: (() => Type) | Type
   }
   interface SchemaOptions {
