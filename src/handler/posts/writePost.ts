@@ -9,11 +9,17 @@ interface IWritePostHTTPBody {
 }
 
 export default async function handler(event: LambdaProxy.Event): Promise<LambdaProxy.Response> {
-  const httpBody: IWritePostHTTPBody = JSON.parse(event.body || "");
+  let httpBody: IWritePostHTTPBody | null = null;
+
+  try {
+    httpBody = JSON.parse(event.body || "");
+  } catch (err) {
+    return errorMaker(500, "Error on parsing JSONed HTTP body");
+  }
 
   if (!httpBody) {
     return errorMaker(400, "You should post something");
-  } else if (httpBody.content.length > 15){
+  } else if (httpBody.content.length > 15) {
     return errorMaker(400, "content shouldn't be more than 10 character");
   }
 
