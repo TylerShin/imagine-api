@@ -5,6 +5,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "noImplicitAny": true,
+    "noUnusedLocals": true,
     "strictNullChecks": true,
     "lib": [
       "es6"

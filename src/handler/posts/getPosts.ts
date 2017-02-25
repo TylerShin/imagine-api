@@ -1,27 +1,11 @@
 import * as LambdaProxy from "../../typings/lambda-proxy";
-import * as uuid from "uuid";
 import Post from "../../model/post";
-import errorMaker from "../../helper/errorMaker";
-
-interface IWritePostHTTPBody {
-  content: string;
-  resources: [string];
-}
 
 export default async function handler(event: LambdaProxy.Event): Promise<LambdaProxy.Response> {
-  const httpBody: IWritePostHTTPBody = JSON.parse(event.body || "");
-
-  if (!httpBody) {
-    return errorMaker(400, "You should post something");
-  } else if (httpBody.content.length > 15){
-    return errorMaker(400, "content shouldn't be more than 10 character");
-  }
-
   try {
     const newPost = new Post({
-      postId: uuid.v1(),
-      content: httpBody.content || "",
-      resources: httpBody.resources,
+      content: "less 10",
+      resources: ["https://images.vingle.net/upload/t_ca_xl/wanhqbpjpgrwevqx9fn2.jpg"],
     });
     await newPost.save();
     return {

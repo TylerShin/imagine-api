@@ -12,7 +12,7 @@ export const postSchema = new Schema({
   },
   content: {
     type: String,
-    validate: function(value: string) { return value.length < 10; },
+    validate: function(value: string) { return value.length <= 15; },
   },
   resources: {
     type: [String],
