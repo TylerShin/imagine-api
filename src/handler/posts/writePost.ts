@@ -1,7 +1,7 @@
 import * as LambdaProxy from "../../typings/lambda-proxy";
 import * as uuid from "uuid";
 import Post from "../../model/post";
-import errorMaker from "../../helper/errorMaker";
+import makeError from "../../helper/errorMaker";
 
 interface IWritePostHTTPBody {
   content: string;
@@ -15,13 +15,13 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
   try {
     httpBody = JSON.parse(event.body || "");
   } catch (err) {
-    return errorMaker(500, "Error on parsing JSONed HTTP body");
+    return makeError(500, "Error on parsing JSONed HTTP body");
   }
 
   if (!httpBody) {
-    return errorMaker(400, "You should post something");
+    return makeError(400, "You should post something");
   } else if (httpBody.content.length > 15) {
-    return errorMaker(400, "content shouldn't be more than 10 character");
+    return makeError(400, "content shouldn't be more than 10 character");
   }
 
   try {
@@ -40,12 +40,6 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
       body: JSON.stringify({ success: true }),
     };
   } catch (e) {
-    return {
-      headers: {
-        "content-type": "application/json; charset=utf-8",
-      },
-      statusCode: 500,
-      body: JSON.stringify(e),
-    };
+    return makeError(500, e);
   }
 };

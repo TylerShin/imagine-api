@@ -3,7 +3,8 @@ import * as Base from './base';
 // Event
 export interface Event extends Base.Event{
   resource?: string;
-  path?: string;
+  path?: any;
+  query?: any;
   httpMethod?: string;
   headers: EventHeaders;
   queryStringParameters: EventQueryStringParameters;

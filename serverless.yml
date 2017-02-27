@@ -26,6 +26,18 @@ functions:
           path: ${self:service}/api/posts/new
           cors: true
 
+  getPost:
+    handler: handler.getPost
+    events:
+      - http:
+          method: get
+          path: ${self:service}/api/posts/{id}
+          integration: lambda
+          request:
+            parameters:
+              paths:
+                id: true
+
 resources:
   Resources:
     DynamoDbTable:
