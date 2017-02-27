@@ -32,6 +32,9 @@ export const postSchema = new Schema({
     type: Number,
     default: 0,
   },
+  lastActionAt: {
+    type: Date,
+  },
   tags: {
     type: [String]
   },
