@@ -52,3 +52,11 @@ resources:
               Resource: arn:aws:dynamodb:*:*:*
         Roles:
           - Ref: IamRoleLambdaExecution
+
+    GetPostLogGroup:
+      Properties:
+        RetentionInDays: "30"
+
+    WritePostLogGroup:
+      Properties:
+        RetentionInDays: "30"
