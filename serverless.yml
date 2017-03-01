@@ -40,23 +40,8 @@ functions:
 
 resources:
   Resources:
-    DynamoDbTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:service}-posts
-        AttributeDefinitions:
-          - AttributeName: postId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: postId
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-
     DynamoDBIamPolicy:
       Type: AWS::IAM::Policy
-      DependsOn: DynamoDbTable
       Properties:
         PolicyName: AmazonDynamoDBFullAccess
         PolicyDocument:

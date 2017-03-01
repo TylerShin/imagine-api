@@ -14,6 +14,7 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
 
   try {
     httpBody = JSON.parse(event.body || "");
+    console.log(httpBody);
   } catch (err) {
     return makeError(500, "Error on parsing JSONed HTTP body");
   }
