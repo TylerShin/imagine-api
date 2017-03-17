@@ -37,6 +37,13 @@ functions:
             parameters:
               paths:
                 id: true
+  signup:
+    handler: handler.signup
+    events:
+      - http:
+          method: post
+          path: ${self:service}/api/users/new
+          cors: true
 
 resources:
   Resources:
