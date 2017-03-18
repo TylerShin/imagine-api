@@ -41,7 +41,7 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
 
   const token = jwt.sign(userParams, JWTKey, {
     algorithm: 'HS512', //"HS256", "HS384", "HS512", "RS256", "RS384", "RS512" default SHA256
-    expiresInMinutes: 1440 //expires in 24 hours
+    expiresIn: "1440m" //expires in 24 hours
   } as jwt.SignOptions);
 
   // set JWT token

@@ -1,6 +1,8 @@
-require('dotenv').config();
+module.exports.env = () => {
+  require('dotenv').config();
 
-exports.env = {
-  JWTKEY: process.env.JWTKEY,
-  foo: "bar",
+  return {
+    JWTKEY: process.env.JWTKEY,
+    foo: "bar",
+  };
 };

@@ -26,6 +26,7 @@
     "@types/password-hash": "^1.2.19",
     "@types/uuid": "^2.0.29",
     "dotenv": "^4.0.0",
+    "serverless": "^1.9.0",
     "typescript": "^2.2.1"
   },
   "dependencies": {
