@@ -1,16 +1,16 @@
 import * as LambdaProxy from "../../typings/lambda-proxy";
+import User from "../../model/user";
 import * as uuid from "uuid";
-import Post from "../../model/post";
 import makeError from "../../helper/errorMaker";
 
-interface IWritePostHTTPBody {
-  content: string;
-  resources: [string];
-  userId: string;
+interface ISignUpRequestBody {
+  username: string;
+  email: string;
+  password: string;
 }
 
 export default async function handler(event: LambdaProxy.Event): Promise<LambdaProxy.Response> {
-  let httpBody: IWritePostHTTPBody | null = null;
+  let httpBody: ISignUpRequestBody | null = null;
 
   try {
     httpBody = JSON.parse(event.body || "");
@@ -20,26 +20,24 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
 
   if (!httpBody) {
     return makeError(400, "You should post something");
-  } else if (httpBody.content.length > 15) {
-    return makeError(400, "content shouldn't be more than 10 character");
   }
 
   try {
-    const newPost = new Post({
-      Id: uuid.v1(),
-      userId: httpBody.userId,
-      content: httpBody.content || "",
-      resources: httpBody.resources,
+    const newUser = new User({
+      id: uuid.v1(),
+      username: httpBody.username,
+      email: httpBody.email,
+
     });
-    await newPost.save();
+
     return {
       headers: {
         "content-type": "application/json; charset=utf-8",
       },
       statusCode: 200,
-      body: JSON.stringify({ success: true }),
+      body: JSON.stringify({ data: newUser }),
     };
   } catch (e) {
-    return makeError(500, e);
+    return makeError(500, "Has failed to get post from DynamoDB");
   }
 };

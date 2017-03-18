@@ -19,6 +19,12 @@ export const userSchema = new Schema({
     rangeKey: true,
     validate: function (value: string) { return value.length <= 15; },
   },
+  email: {
+    type: String,
+    index: true,
+    rangeKey: true,
+    validate: function (value: string) { return value.length <= 30; },
+  },
   password: {
     type: String,
     required: true,
