@@ -1,12 +1,11 @@
 import * as LambdaProxy from "../../typings/lambda-proxy";
 // import * as jwt from "jsonwebtoken";
 import * as passwordHash from "password-hash";
-import User from "../../model/user";
+import User, { IUser } from "../../model/user";
 import makeError from "../../helper/errorMaker";
 
 interface ISignInRequestBody {
   username: string;
-  email: string;
   password: string;
 }
 
@@ -29,39 +28,43 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
   }
 
   const username = httpBody.username;
-  const email = httpBody.email;
-  const password = passwordHash.generate(httpBody.password);
+  const password = httpBody.password;
 
-  if ((!username && !email) || !password) {
+  if (!username || !password) {
     return makeError(401, "You should input username or password");
   }
 
-  let user;
+  let userModel;
+  let resultUser: IUser[] = [];
   await new Promise((resolve, reject) => {
-    console.log(username);
-    try {
-      if (email) {
-        User.queryOne({ email: { eq: email } }, (err, user) => {
-          user = user;
-          resolve();
-        });
-      } else if (username) {
-        User.get({ username }, (err, user) => {
-          console.log(user);
-          user = user;
-          resolve();
-        });
+    User.scan({ username: { eq: username } }, (err, user) => {
+      if (err) {
+        return makeError(500, `can not find user! ${err}`)
       }
-    } catch (err) {
-      reject(makeError(404, `${JSON.stringify(err)} There is no signed user.`));
-    }
+      userModel = user;
+      resultUser = JSON.parse(JSON.stringify(user));
+      if (resultUser.length < 0) {
+        return makeError(404, "There is no user");
+      }
+      resolve();
+    });
   });
+
+  // Verify password
+  const userObj = resultUser[0];
+  const verified = passwordHash.verify(password, userObj.password);
+  if (!verified) {
+    return makeError(401, "Wrong password");
+  }
+
+  // regenerate and update JWT
+
 
   return {
     headers: {
       "content-type": "application/json; charset=utf-8",
     },
     statusCode: 200,
-    body: JSON.stringify({ data: user }),
+    body: JSON.stringify({ data: resultUser }),
   };
 };

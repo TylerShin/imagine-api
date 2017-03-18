@@ -34,7 +34,6 @@ export const userSchema = new Schema({
   },
   email: {
     type: String,
-    hashKey: true,
     required: true,
     validate: function (value: string) { return value.length <= 30; },
   },
