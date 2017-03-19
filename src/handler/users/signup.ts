@@ -1,9 +1,9 @@
 import * as LambdaProxy from "../../typings/lambda-proxy";
-import * as jwt from "jsonwebtoken";
 import * as passwordHash from "password-hash";
-import User from "../../model/user";
+import User, { IUser } from "../../model/user";
 import * as uuid from "uuid";
 import makeError from "../../helper/errorMaker";
+import getToken from "../../helper/getToken";
 
 interface ISignUpRequestBody {
   username: string;
@@ -15,11 +15,6 @@ interface ISignUpRequestBody {
 }
 
 export default async function handler(event: LambdaProxy.Event): Promise<LambdaProxy.Response> {
-  const JWTKey: string = process.env.JWTKEY;
-  if (!JWTKey) {
-    return makeError(500, "You should set JWT Key");
-  }
-
   let httpBody: ISignUpRequestBody | null = null;
 
   try {
@@ -32,20 +27,15 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
     return makeError(400, "You should post something");
   }
 
-  const userParams: ISignUpRequestBody = {
+  const userParams: IUser = {
     id: uuid.v1(),
     username: httpBody.username,
     email: httpBody.email,
     password: passwordHash.generate(httpBody.password),
   };
 
-  const token = jwt.sign(userParams, JWTKey, {
-    algorithm: 'HS512', //"HS256", "HS384", "HS512", "RS256", "RS384", "RS512" default SHA256
-    expiresIn: "1440m" //expires in 24 hours
-  } as jwt.SignOptions);
-
   // set JWT token
-  userParams["jwtToken"] = token;
+  userParams["jwtToken"] = getToken(userParams);
 
   const newUser = new User(userParams);
 

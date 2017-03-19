@@ -5,15 +5,15 @@ const Schema = dynamoose.Schema;
 
 export interface IUser {
   id: string;
-  jwtToken: string;
+  jwtToken?: string;
   username: string;
   email: string;
   password: string;
-  followersCount: number;
-  followingsCount: number;
-  lastActionAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  followersCount?: number;
+  followingsCount?: number;
+  lastActionAt?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export const userSchema = new Schema({
@@ -23,12 +23,9 @@ export const userSchema = new Schema({
     hashKey: true,
     required: true,
   },
-  jwtToken: {
-    type: String,
-  },
   username: {
     type: String,
-    hashKey: true,
+    rangeKey: true,
     required: true,
     validate: function (value: string) { return value.length <= 15; },
   },
@@ -36,6 +33,9 @@ export const userSchema = new Schema({
     type: String,
     required: true,
     validate: function (value: string) { return value.length <= 30; },
+  },
+  jwtToken: {
+    type: String,
   },
   password: {
     type: String,
