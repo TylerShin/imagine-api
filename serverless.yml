@@ -4,16 +4,7 @@ provider:
   name: aws
   runtime: nodejs4.3
   environment: ${file(./config.js):env}
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
 
-# you can add statements to the Lambda function's IAM Role here
-
-# you can define service wide environment variables here
-
-
-# you can add packaging information here
 package:
   artifact: dist.zip
 
@@ -44,7 +35,7 @@ functions:
       - http:
           method: get
           path: ${self:service}/api/users
-
+          cors: true
   signup:
     handler: handler.signup
     events:

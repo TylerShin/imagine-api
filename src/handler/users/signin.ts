@@ -71,6 +71,7 @@ export default async function handler(event : LambdaProxy.Event) : Promise < Lam
           return makeError(500, err);
         }
         userObj["jwtToken"] = newToken;
+        delete userObj["password"];
         resolve();
       });
     });
@@ -78,6 +79,9 @@ export default async function handler(event : LambdaProxy.Event) : Promise < Lam
 
   return {
     headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Expose-Headers": "Authorization",
+      'Access-Control-Allow-Credentials': 'true',
       "content-type": "application/json; charset=utf-8"
     },
     statusCode: 200,
