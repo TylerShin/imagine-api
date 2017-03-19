@@ -27,6 +27,7 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
         return makeError(404, `Couldn't find user, ${err}`)
       }
       fetchedUser = JSON.parse(JSON.stringify(userModel));
+      delete fetchedUser["password"];
       resolve();
     });
   });
