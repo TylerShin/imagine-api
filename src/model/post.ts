@@ -4,7 +4,7 @@ import { SERVICE_NAME, POST_TABLE } from '../constants';
 const Schema = dynamoose.Schema;
 
 export const postSchema = new Schema({
-  postId: {
+  id: {
     type: String,
     validate: function (value: string) { return value.length > 0; },
     hashKey: true,

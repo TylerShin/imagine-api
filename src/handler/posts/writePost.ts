@@ -14,7 +14,6 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
 
   try {
     httpBody = JSON.parse(event.body || "");
-    console.log(httpBody);
   } catch (err) {
     return makeError(500, "Error on parsing JSONed HTTP body");
   }
@@ -27,7 +26,7 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
 
   try {
     const newPost = new Post({
-      postId: uuid.v1(),
+      Id: uuid.v1(),
       userId: httpBody.userId,
       content: httpBody.content || "",
       resources: httpBody.resources,
