@@ -18,6 +18,9 @@ export default async function handler(event: LambdaProxy.Event): Promise<LambdaP
     }
     return {
       headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Authorization",
+        'Access-Control-Allow-Credentials': 'true',
         "content-type": "application/json; charset=utf-8",
       },
       statusCode: 200,
