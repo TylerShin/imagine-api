@@ -3,7 +3,7 @@ import * as LambdaProxy from "../../typings/lambda-proxy";
 import * as passwordHash from "password-hash";
 import User, {IUser} from "../../model/user";
 import makeError from "../../helper/errorMaker";
-import getToken from "../../helper/getToken";
+import { getToken } from "../../helper/token";
 
 interface ISignInRequestBody {
   username : string;

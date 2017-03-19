@@ -3,7 +3,7 @@ import * as passwordHash from "password-hash";
 import User, { IUser } from "../../model/user";
 import * as uuid from "uuid";
 import makeError from "../../helper/errorMaker";
-import getToken from "../../helper/getToken";
+import { getToken } from "../../helper/token";
 
 interface ISignUpRequestBody {
   username: string;

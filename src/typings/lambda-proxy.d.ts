@@ -40,6 +40,7 @@ export interface EventHeaders {
   "Accept"?: string;
   "Accept-Encoding"?: string;
   "Accept-Language"?: string;
+  "Authorization"?: string;
   "Cookie"?: string;
   "CloudFront-Forwarded-Proto"?: string;
   "CloudFront-Is-Desktop-Viewer"?: string;

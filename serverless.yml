@@ -37,6 +37,14 @@ functions:
             parameters:
               paths:
                 id: true
+
+  getUser:
+    handler: handler.getUser
+    events:
+      - http:
+          method: get
+          path: ${self:service}/api/users
+
   signup:
     handler: handler.signup
     events:
